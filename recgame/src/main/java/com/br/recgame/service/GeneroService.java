@@ -33,5 +33,6 @@ public class GeneroService {
         
         }
         repository.insert(gen);
-    
+    }
 }
+
