@@ -21,7 +21,8 @@ public class PlataformaController {
 
     @Autowired
     private PlataformaService service;
-    
+
+   // @CrossOrigin(origins = "*")
     @GetMapping
     public List<Plataforma> listaPlataforma() {
         return service.listarPlataformas();

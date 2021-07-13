@@ -7,6 +7,8 @@ import com.br.recgame.model.Jogo;
 import com.br.recgame.service.JogoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +20,11 @@ public class JogoController {
     @Autowired
     private JogoService service;
 
+    @GetMapping
     public List<Jogo> listarJogo(){
         return service.listarJogo();
     }
-
+    @PostMapping
     public void inserirJogoJogo(@RequestBody Map<String, Object> Jogo){
         service.inserirJogo(Jogo);
     }
