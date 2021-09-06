@@ -3,22 +3,25 @@ package com.br.recgame.model;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Plataforma {
     @Id
-    private Integer idPlataforma;
+    private Long idPlataforma;
+    @Transient
+    public final String SEQUENCIA = "plataforma_sequencia";
     private String descricao;
     private Date dataCadastro;
 
     public Plataforma() {}
 
-    public Integer getIdPlataforma() {
+    public Long getIdPlataforma() {
         return idPlataforma;
     }
 
-    public void setIdPlataforma(Integer idPlataforma) {
+    public void setIdPlataforma(Long idPlataforma) {
         this.idPlataforma = idPlataforma;
     }
 

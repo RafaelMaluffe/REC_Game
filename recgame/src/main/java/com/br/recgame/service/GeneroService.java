@@ -16,6 +16,9 @@ public class GeneroService {
     @Autowired
     private GeneroRepository repository;
 
+    @Autowired
+    private SequenciaService seq;
+
     public List<Genero> listarGenero(){
         return repository.findAll();
 
@@ -24,7 +27,7 @@ public class GeneroService {
     public void inserirGenero(Map<String, Object> genero){
         Genero gen = new Genero();
 
-        gen.setIdGenero(Integer.parseInt(genero.get("idGenero").toString()));
+        gen.setIdGenero(seq.proxima_sequencia(gen.SEQUENCIA));
         gen.setDescricao(genero.get("descricao").toString());
         try {
             gen.setDataCadastro(new SimpleDateFormat("dd/MM/yyyy").parse(genero.get("dataCadastro").toString()));
@@ -33,6 +36,26 @@ public class GeneroService {
         
         }
         repository.insert(gen);
+    }
+
+    public void AlterarGenero(Map<String, Object> genero) {
+        Genero gen = new Genero();
+
+        gen.setIdGenero(Long.parseLong(genero.get("id").toString()));
+        gen.setDescricao(genero.get("descricao").toString());
+        try {
+            gen.setDataCadastro(new SimpleDateFormat("dd/MM/yyyy").parse(genero.get("dataCadastro").toString())); 
+        } catch (Exception e) {
+            gen.setDataCadastro(null);
+        }
+        repository.save(gen);
+    }
+
+    public void DeletarGenero(Map<String, Object> genero){
+        Genero gen = new Genero();
+        gen.setIdGenero(Long.parseLong(genero.get("id").toString()));
+        repository.delete(gen);
+
     }
 }
 

@@ -2,12 +2,15 @@ package com.br.recgame.model;
 
 import java.util.Date;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Genero {
     @Id
-    private Integer idGenero;
+    private long idGenero;
+    @Transient
+    public final String SEQUENCIA = "genero_sequencia";
     private String descricao;
     private Date dataCadastro;
 
@@ -15,11 +18,11 @@ public class Genero {
 
   
 
-    public Integer getIdGenero() {
+    public long getIdGenero() {
         return idGenero;
     }
 
-    public void setIdGenero(Integer idGenero) {
+    public void setIdGenero(long idGenero) {
         this.idGenero = idGenero;
     }
 

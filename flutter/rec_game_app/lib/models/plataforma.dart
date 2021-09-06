@@ -1,6 +1,3 @@
-// ignore: unused_import
-import 'package:flutter/material.dart';
-
 class Plataforma {
   final int id;
   final String descricao;
