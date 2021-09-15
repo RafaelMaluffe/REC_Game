@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rec_game_app/Widgets/PlataformaList.dart';
+import 'package:rec_game_app/Widgets/PlataformaListTiles.dart';
 import 'package:rec_game_app/models/plataforma.dart';
 import 'package:rec_game_app/Service/PlataformaService.dart' as serv;
 
+//Quem sabe para recarregar a lista Precise ser Statefull
 // ignore: camel_case_types
 class Plataforma_List extends StatelessWidget {
   @override

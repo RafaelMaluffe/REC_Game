@@ -24,21 +24,21 @@ class HomeView extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: const Text('Plataforma'),
+              title: const Text('Jogos'),
               onTap: () {
-                Navigator.of(context).pushNamed('/Plataforma');
+                Navigator.of(context).pushNamed('/jogo');
               },
             ),
             ListTile(
               title: const Text('Gênero'),
               onTap: () {
-                Navigator.of(context).pushNamed('/Genero');
+                Navigator.of(context).pushNamed('/genero');
               },
             ),
             ListTile(
-              title: const Text('Jogo'),
+              title: const Text('Plataforna'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed('/plataforma');
               },
             )
           ],

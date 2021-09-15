@@ -53,7 +53,7 @@ class PlataformaAdd extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.skip_next))
+                icon: Icon(Icons.add_sharp))
           ],
         ),
       ),
