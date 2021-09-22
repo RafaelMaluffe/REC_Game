@@ -1,6 +1,7 @@
 package com.br.recgame.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -9,21 +10,41 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Jogo {
     @Id
-    private Integer idJogo;
+    private Long idJogo;
     @Transient
     public final String SEQUENCIA = "jogo_sequencia";
     private String descricao;
     private Date dataCadastro;
-    //sequencia
+    private List<Long> plataforma;
+    private List<Long> genero;
+
+
+
     //Provavelmente atributos de avalição e situação
+
+    public List<Long> getPlataforma() {
+        return plataforma;
+    }
+
+    public void setPlataforma(List<Long> plataforma) {
+        this.plataforma = plataforma;
+    }
+
+    public List<Long> getGenero() {
+        return genero;
+    }
+
+    public void setGenero(List<Long> genero) {
+        this.genero = genero;
+    }
 
     public Jogo() {};
 
-    public Integer getIdJogo() {
+    public Long getIdJogo() {
         return idJogo;
     }
 
-    public void setIdJogo(Integer idJogo) {
+    public void setIdJogo(Long idJogo) {
         this.idJogo = idJogo;
     }
 

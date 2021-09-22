@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rec_game_app/Widgets/JogoListTiles.dart';
 import 'package:rec_game_app/models/Jogo.dart';
+import 'package:rec_game_app/Service/JogoService.dart' as serv;
 
 // ignore: camel_case_types
 class JogoList extends StatelessWidget {
@@ -12,20 +13,21 @@ class JogoList extends StatelessWidget {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  // Navigator.of(context).pushNamed('/PlataformaAdd');
+                  //Navigator.of(context).pushNamed('/PlataformaAdd');
                 },
                 icon: Icon(Icons.add))
           ],
         ),
-        body: FutureBuilder<List<Jogo>>(builder: (context, jog) {
-          if (jog.hasError) print(jog.stackTrace);
-          if (jog.hasData) {
-            return JogoListTile();
-          } else {
-            return Center(
-              child: Icon(Icons.access_time),
-            );
-          }
-        }));
+        body: FutureBuilder<List<Jogo>>(
+          future: serv.listarJogo,
+          builder: (context, jog) {
+            if (jog.hasError) print(jog.stackTrace);
+            return jog.hasData
+                ? JogoListTile(jog.data!)
+                : Center(
+                    child: Icon(Icons.access_time),
+                  );
+          },
+        ));
   }
 }

@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:rec_game_app/models/plataforma.dart';
+import 'package:rec_game_app/models/jogo.dart';
 
-class PlataformaService with ChangeNotifier {
-  final Map<String, Plataforma> _itens = {};
+class JogoService with ChangeNotifier {
+  final Map<String, Jogo> _itens = {};
 
-  List<Plataforma> get all {
+  List<Jogo> get all {
     return [..._itens.values];
   }
 }
 
-Future<List<Plataforma>> get listarPlataforma async {
+Future<List<Jogo>> get listarJogo async {
   final client = http.Client();
-  final url = Uri.parse("http://localhost:8080/plataforma");
+  final url = Uri.parse("http://localhost:8080/jogo");
   final resposta = await client.get(url, headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": "true",
@@ -22,13 +22,12 @@ Future<List<Plataforma>> get listarPlataforma async {
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
   });
   print(resposta.body);
-  return compute(parsePlataforma, resposta.body);
+  return compute(parseJogo, resposta.body);
 }
 
-Future<http.Response> criarPlataforma(
-    String descricao, String dataCadastro) async {
+Future<http.Response> criarJogo(String descricao, String dataCadastro) async {
   return await http.post(
-    Uri.parse("http://localhost:8080/plataforma"),
+    Uri.parse("http://localhost:8080/Jogo"),
     headers: <String, String>{
       "Access-Control-Allow-Origin": "*",
       'Content-Type': 'application/json; charset=UTF-8',
@@ -40,10 +39,10 @@ Future<http.Response> criarPlataforma(
   );
 }
 
-Future<http.Response> alterarPlataforma(
+Future<http.Response> alterarJogo(
     int id, String descricao, String dataCadastro) async {
   return await http.put(
-    Uri.parse("http://localhost:8080/plataforma"),
+    Uri.parse("http://localhost:8080/jogo"),
     headers: <String, String>{
       "Access-Control-Allow-Origin": "*",
       'Content-Type': 'application/json; charset=UTF-8',
@@ -56,9 +55,9 @@ Future<http.Response> alterarPlataforma(
   );
 }
 
-Future<http.Response> daletarPlataforma(int id) async {
+Future<http.Response> daletarJogo(int id) async {
   return await http.delete(
-    Uri.parse("http://localhost:8080/plataforma"),
+    Uri.parse("http://localhost:8080/jogo"),
     headers: <String, String>{
       "Access-Control-Allow-Origin": "*",
       'Content-Type': 'application/json; charset=UTF-8',
@@ -69,8 +68,8 @@ Future<http.Response> daletarPlataforma(int id) async {
   );
 }
 
-List<Plataforma> parsePlataforma(String responseBody) {
+List<Jogo> parseJogo(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-  return parsed.map<Plataforma>((json) => Plataforma.fromjson(json)).toList();
+  return parsed.map<Jogo>((json) => Jogo.fromjson(json)).toList();
 }

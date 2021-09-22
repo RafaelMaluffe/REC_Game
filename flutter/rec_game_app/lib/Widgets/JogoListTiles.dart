@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rec_game_app/models/Jogo.dart';
-import 'package:rec_game_app/Data/jogo_test.dart';
 
 int delID = 0;
 
 class JogoListTile extends StatelessWidget {
-  final List<Jogo> jog = {...Jogo_test} as List<Jogo>;
+  final List<Jogo> jog;
 
-  // const JogoListTile(this.jog);
+  const JogoListTile(this.jog);
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +48,6 @@ class JogoListTile extends StatelessWidget {
                 ),
               ],
             ),
-            Image.asset(
-                'https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg'),
-            Image.asset(
-                'https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg'),
           ],
         ),
       ),
