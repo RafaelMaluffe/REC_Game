@@ -15,18 +15,18 @@ public class Jogo {
     public final String SEQUENCIA = "jogo_sequencia";
     private String descricao;
     private Date dataCadastro;
-    private List<Long> plataforma;
+    private Long plataforma;
     private List<Long> genero;
 
 
 
     //Provavelmente atributos de avalição e situação
 
-    public List<Long> getPlataforma() {
+    public Long getPlataforma() {
         return plataforma;
     }
 
-    public void setPlataforma(List<Long> plataforma) {
+    public void setPlataforma(Long plataforma) {
         this.plataforma = plataforma;
     }
 
@@ -66,9 +66,11 @@ public class Jogo {
 
     @Override
     public String toString() {
-        return "Jogo [dataCadastro=" + dataCadastro + ", descricao=" +
-        descricao + ", idJogo=" + idJogo + "]";
-    };
+        return "Jogo [dataCadastro=" + dataCadastro + ", descricao=" + descricao + ", genero=" + genero + ", idJogo="
+                + idJogo + ", plataforma=" + plataforma + "]";
+    }
+
+
 
     
     
