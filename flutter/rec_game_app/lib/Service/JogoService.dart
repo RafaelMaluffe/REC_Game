@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:rec_game_app/models/Jogo.dart';
+import 'package:rec_game_app/models/genero.dart';
+import 'package:rec_game_app/models/plataforma.dart';
 
 class JogoService with ChangeNotifier {
   final Map<String, Jogo> _itens = {};
@@ -25,16 +27,19 @@ Future<List<Jogo>> get listarJogo async {
   return compute(parseJogo, resposta.body);
 }
 
-Future<http.Response> criarJogo(String descricao, String dataCadastro) async {
+Future<http.Response> criarJogo(String descricao, String dataCadastro,
+    int plataforma, List<int> genero) async {
   return await http.post(
     Uri.parse("http://localhost:8080/jogo"),
     headers: <String, String>{
       "Access-Control-Allow-Origin": "*",
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(<String, String>{
+    body: jsonEncode(<String, Object>{
       'descricao': descricao,
       'dataCadastro': dataCadastro,
+      'plataforma': plataforma,
+      'genero': genero,
     }),
   );
 }

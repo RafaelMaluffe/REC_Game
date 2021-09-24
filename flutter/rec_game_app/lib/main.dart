@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rec_game_app/views/GeneroList.dart';
 import 'package:rec_game_app/views/HomeView.dart';
+import 'package:rec_game_app/views/JogoAdd.dart';
 import 'package:rec_game_app/views/JogoList.dart';
 import 'package:rec_game_app/views/PlataformaAdd.dart';
 import 'package:rec_game_app/views/GeneroAdd.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         '/genero': (context) => GeneroList(),
         '/generoAdd': (context) => GeneroAdd(),
         '/jogo': (context) => JogoList(),
+        '/jogoAdd': (context) => JogoAdd(),
       },
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
