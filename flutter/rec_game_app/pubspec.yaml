@@ -26,6 +26,7 @@ dependencies:
   rflutter_alert:
   http:
   intl: 
+  flutter_tags: "^0.4.9+1"
 
     
 
