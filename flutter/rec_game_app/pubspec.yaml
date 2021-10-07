@@ -26,7 +26,7 @@ dependencies:
   rflutter_alert:
   http:
   intl: 
-  flutter_tags: "^0.4.9+1"
+  flutter_tags: "^1.0.0-nullsafety.1"
 
     
 

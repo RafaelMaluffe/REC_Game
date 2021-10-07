@@ -14,7 +14,7 @@ class JogoList extends StatelessWidget {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/JogoAdd');
+                  Navigator.of(context).pushNamed('/jogoAdd');
                 },
                 icon: Icon(Icons.add))
           ],
