@@ -13,7 +13,7 @@ class GeneroList extends StatelessWidget {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/GeneroAdd');
+                  Navigator.of(context).pushNamed('/generoAdd');
                 },
                 icon: Icon(Icons.add))
           ],

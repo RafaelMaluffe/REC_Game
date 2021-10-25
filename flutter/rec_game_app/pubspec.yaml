@@ -27,6 +27,7 @@ dependencies:
   http:
   intl: 
   flutter_tags: "^1.0.0-nullsafety.1"
+  flutter_tagging:
 
     
 
