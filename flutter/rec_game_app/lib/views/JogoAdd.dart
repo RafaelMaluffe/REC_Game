@@ -2,9 +2,10 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rec_game_app/Service/GeneroService.dart' as gen;
+import 'package:rec_game_app/Service/PlataformaService.dart' as plat;
 import 'package:rec_game_app/Widgets/DropDownBox.dart';
 import 'package:rec_game_app/models/genero.dart';
-import 'package:rec_game_app/models/genero.dart';
+import 'package:rec_game_app/models/plataforma.dart';
 
 // ignore: camel_case_types
 class JogoAdd extends StatefulWidget {
@@ -23,8 +24,6 @@ class _JogoAddState extends State<JogoAdd> {
   final DateTime dateToday =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   final _form = GlobalKey<FormState>();
-  final List GeneroTags = ['Plataforma', 'FPS', 'RPG', 'Puzzle'];
-  final List plats = ['PC', 'PSP', 'SNES', 'PolyStatiton'];
 
   @override
   Widget build(BuildContext context) {
@@ -55,22 +54,40 @@ class _JogoAddState extends State<JogoAdd> {
                 },
                 onSaved: (value) => descricao = value!,
               ),
-              DropDownBox(ListaDrop: plats, Text: 'Escolha uma plataforma'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(2),
-                    child: DropDownBox(
-                        ListaDrop: GeneroTags, Text: 'Escolha um Gênero'),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(2),
-                    child: DropDownBox(
-                        ListaDrop: GeneroTags, Text: 'Escolha um Sub-Gênero'),
-                  ),
-                ],
-              ),
+              FutureBuilder<List<Plataforma>>(
+                  future: plat.listarPlataforma,
+                  builder: (context, plataforma) {
+                    return Column(
+                      children: [
+                        DropDownBox(
+                            ListaDrop: plataforma.data!,
+                            Text: 'Escolha uma plataforma'),
+                      ],
+                    );
+                  }),
+              FutureBuilder<List<Genero>>(
+                  future: gen.listarGenero,
+                  builder: (context, genero) {
+                    return Column(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(2),
+                            child: DropDownBox(
+                                ListaDrop: genero.data!,
+                                Text: 'Escolha um Gênero'),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(2),
+                            child: DropDownBox(
+                                ListaDrop: genero.data!,
+                                Text: 'Escolha um Sub-Gênero'),
+                          ),
+                        ],
+                      ),
+                    ]);
+                  })
             ],
           ),
         ),
@@ -84,14 +101,4 @@ class _JogoAddState extends State<JogoAdd> {
       ),
     );
   }
-}
-
-PopularLista() {
-  List Generos = gen.listarGenero as List;
-  List<dynamic> listaDescricao = [];
-
-  for (var i = 0; i < Generos.length; i++) {
-    listaDescricao.add(Generos[i][2].toString());
-  }
-  return listaDescricao;
 }

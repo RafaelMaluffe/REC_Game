@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rec_game_app/models/genero.dart';
 
 class DropDownBox extends StatefulWidget {
-  final List ListaDrop;
+  final List<dynamic> ListaDrop;
   final String Text;
 
   DropDownBox({Key? key, required this.ListaDrop, required this.Text})
@@ -12,11 +13,11 @@ class DropDownBox extends StatefulWidget {
 }
 
 class _DropDownBoxState extends State<DropDownBox> {
-  List _ListaDrop;
+  List<dynamic> _ListaDrop;
   String _Text;
   _DropDownBoxState(this._ListaDrop, this._Text);
-  late List<DropdownMenuItem<String>> _dropDownMenuItems;
-  late String _ItemAtual;
+  late List<DropdownMenuItem<dynamic>> _dropDownMenuItems;
+  late dynamic _ItemAtual;
 
   @override
   void initState() {
@@ -25,10 +26,11 @@ class _DropDownBoxState extends State<DropDownBox> {
     super.initState();
   }
 
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
-    List<DropdownMenuItem<String>> items = [];
-    for (String item in _ListaDrop) {
-      items.add(new DropdownMenuItem(value: item, child: new Text(item)));
+  List<DropdownMenuItem<dynamic>> getDropDownMenuItems() {
+    List<DropdownMenuItem> items = [];
+    for (dynamic item in _ListaDrop) {
+      items.add(
+          new DropdownMenuItem(value: item, child: new Text(item.descricao)));
     }
     return items;
   }
@@ -53,7 +55,7 @@ class _DropDownBoxState extends State<DropDownBox> {
     );
   }
 
-  void changedDropDownItem(String? itemSelecionado) {
+  void changedDropDownItem(dynamic itemSelecionado) {
     setState(() {
       _ItemAtual = itemSelecionado!;
     });
