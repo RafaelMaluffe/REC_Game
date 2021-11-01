@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:rec_game_app/models/Jogo.dart';
-import 'package:rec_game_app/models/genero.dart';
-import 'package:rec_game_app/models/plataforma.dart';
 
 class JogoService with ChangeNotifier {
   final Map<String, Jogo> _itens = {};
