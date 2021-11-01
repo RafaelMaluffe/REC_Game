@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rec_game_app/models/genero.dart';
 
 class DropDownBox extends StatefulWidget {
   final List<dynamic> ListaDrop;
@@ -58,6 +57,7 @@ class _DropDownBoxState extends State<DropDownBox> {
   void changedDropDownItem(dynamic itemSelecionado) {
     setState(() {
       _ItemAtual = itemSelecionado!;
+      return _ItemAtual;
     });
   }
 }

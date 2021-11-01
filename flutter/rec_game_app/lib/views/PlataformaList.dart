@@ -14,7 +14,7 @@ class Plataforma_List extends StatelessWidget {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/PlataformaAdd');
+                  Navigator.of(context).pushNamed('/plataformaAdd');
                 },
                 icon: Icon(Icons.add))
           ],
