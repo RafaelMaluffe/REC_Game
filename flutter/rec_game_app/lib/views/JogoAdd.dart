@@ -65,7 +65,7 @@ class _JogoAddState extends State<JogoAdd> {
                         DropDownBox(
                             tipo: 'plataforma',
                             listaDrop: plataforma.data!,
-                            text: 'Escolha uma plataforma'),
+                            text: 'Plataforma:'),
                       ],
                     );
                   }),
@@ -74,21 +74,21 @@ class _JogoAddState extends State<JogoAdd> {
                   builder: (context, genero) {
                     return Column(children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                             padding: EdgeInsets.all(2),
                             child: DropDownBox(
                                 tipo: 'genero',
                                 listaDrop: genero.data!,
-                                text: 'Escolha um Gênero'),
+                                text: 'Gênero: '),
                           ),
                           Container(
                             padding: EdgeInsets.all(2),
                             child: DropDownBox(
                                 tipo: 'genero',
                                 listaDrop: genero.data!,
-                                text: 'Escolha um Sub-Gênero'),
+                                text: 'Sub-Gênero:'),
                           ),
                         ],
                       ),
