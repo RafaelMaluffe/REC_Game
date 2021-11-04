@@ -15,12 +15,11 @@ public class Jogo {
     public final String SEQUENCIA = "jogo_sequencia";
     private String descricao;
     private Date dataCadastro;
+    private String imagem;
     private Long plataforma;
     private List<Long> genero;
 
-
-
-    //Provavelmente atributos de avalição e situação
+    // Provavelmente atributos de avalição e situação
 
     public Long getPlataforma() {
         return plataforma;
@@ -38,7 +37,8 @@ public class Jogo {
         this.genero = genero;
     }
 
-    public Jogo() {};
+    public Jogo() {
+    };
 
     public Long getIdJogo() {
         return idJogo;
@@ -64,15 +64,18 @@ public class Jogo {
         this.dataCadastro = dataCadastro;
     }
 
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
     @Override
     public String toString() {
         return "Jogo [dataCadastro=" + dataCadastro + ", descricao=" + descricao + ", genero=" + genero + ", idJogo="
                 + idJogo + ", plataforma=" + plataforma + "]";
     }
 
-
-
-    
-    
-    
 }
