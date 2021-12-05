@@ -22,7 +22,6 @@ public class JogoService {
     public void inserirJogo(Jogo jogo ) {
        
         jogo.setIdJogo(seq.proxima_sequencia(jogo.SEQUENCIA));
-        System.out.println(jogo.toString());        
         repository.insert(jogo);
 
     }

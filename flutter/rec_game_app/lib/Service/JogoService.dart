@@ -26,7 +26,7 @@ Future<List<Jogo>> get listarJogo async {
 }
 
 Future<http.Response> criarJogo(String descricao, String dataCadastro,
-    int plataforma, List<int> genero) async {
+    int plataforma, List<int> genero, String imagem) async {
   return await http.post(
     Uri.parse("http://localhost:8080/jogo"),
     headers: <String, String>{
@@ -38,6 +38,7 @@ Future<http.Response> criarJogo(String descricao, String dataCadastro,
       'dataCadastro': dataCadastro,
       'plataforma': plataforma,
       'genero': genero,
+      'imagem': imagem,
     }),
   );
 }

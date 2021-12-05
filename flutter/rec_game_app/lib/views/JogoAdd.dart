@@ -123,8 +123,7 @@ class _JogoAddState extends State<JogoAdd> {
             // final bytes = File(img64).readAsBytesSync();
             String imgfinal = base64Encode(img64);
             print(imgfinal);
-            criarJogo(
-                descricao, dataCadastro, plataforma!, genero); //+ imgfinal
+            criarJogo(descricao, dataCadastro, plataforma!, genero, imgfinal);
           }
           Navigator.pop(context);
         },
