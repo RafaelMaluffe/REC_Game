@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rec_game_app/Widgets/JogoListTiles.dart';
 import 'package:rec_game_app/Service/JogoService.dart' as serv;
-import 'package:rec_game_app/Widgets/PlataformaListTiles.dart';
 import 'package:rec_game_app/models/Jogo.dart';
-import 'package:rec_game_app/models/plataforma.dart';
 
 // ignore: camel_case_types
 class JogoList extends StatelessWidget {

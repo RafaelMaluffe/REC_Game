@@ -21,7 +21,6 @@ Future<List<Genero>> get listarGenero async {
         "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
   });
-  print(resposta.body);
   return compute(parseGenero, resposta.body);
 }
 

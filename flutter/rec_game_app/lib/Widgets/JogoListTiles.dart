@@ -1,7 +1,12 @@
-import 'dart:html';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:rec_game_app/models/Jogo.dart';
+
+import 'package:rec_game_app/Service/GeneroService.dart' as generoService;
+import 'package:rec_game_app/Service/PlataformaService.dart' as plataformaService;
+import 'package:rec_game_app/models/genero.dart';
+import 'package:rec_game_app/models/plataforma.dart';
 
 class JogoListTile extends StatelessWidget {
   final List<Jogo> jog;
@@ -45,43 +50,8 @@ class JogoListTile extends StatelessWidget {
                     Ink.image(
                       image: NetworkImage(jog[i].avatar),
                       height: 240,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
-                    /*ButtonBar(
-                    alignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          // Perform some action
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: CircleBorder(),
-                          fixedSize: Size.fromRadius(18),
-                          elevation: 6
-                        ),
-                        child: Icon(
-                          Icons.border_color_outlined,
-                          color: Colors.black87,
-                        ) //const Text('ACTION 1', style: TextStyle(color: Colors.black)),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // Perform some action
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: CircleBorder(),
-                          fixedSize: Size.fromRadius(18),
-                          elevation: 6
-                        ),
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.black87,
-                        )//const Text('ACTION 2', style: TextStyle(color: Colors.black)),
-                      ),
-                      ]
-                    )*/
                   ]
                 )
             ),
@@ -111,10 +81,23 @@ class JogoDetailState extends State<JogoDetail> with SingleTickerProviderStateMi
   JogoDetailState({required this.jogo});
   late AnimationController controller;
   late Animation<double> scaleAnimation;
+  Plataforma jogoPlat = Plataforma(id: 0, descricao: "", dataCadastro: "", avatar: "");
+  List<String> generosDesc = [];
+  List<Plataforma> listPlat = [];
+  List<Genero> listGen = [];
 
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(Duration.zero, () async {
+      listGen = await generoService.listarGenero;
+      listPlat = await plataformaService.listarPlataforma;
+      jogoPlat = listPlat.where((element) => element.id == jogo.plataforma).first;
+      jogo.generos.forEach((jogGen) {
+        generosDesc.add(listGen.where((element) => element.id == jogGen).first.descricao);
+      });
+    });
 
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 450));
@@ -134,32 +117,244 @@ class JogoDetailState extends State<JogoDetail> with SingleTickerProviderStateMi
             insetPadding: EdgeInsets.symmetric(horizontal: 100),
             elevation: 5,
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height * 0.6,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [ 
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(jogo.avatar),
-                          fit: BoxFit.fill
-                        ),
-                    )
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(jogo.descricao, textAlign: TextAlign.center)
-                    )
-                  ],
-                )
-                  ])
+              width: MediaQuery.of(context).size.width * 0.65,
+              height: MediaQuery.of(context).size.height * 0.8,
+              padding: EdgeInsets.only(bottom: 20),
+              child: new LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return Container(
+                          height: constraints.maxHeight,
+                          width: constraints.maxWidth,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: constraints.maxHeight * 0.85,
+                                width: constraints.maxWidth,
+                                child: new LayoutBuilder(
+                                  builder: (BuildContext context, BoxConstraints boxSuperior) {
+                                    return Row(
+                                      children: [ 
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 25, left: 20, right: 5), 
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                width: (boxSuperior.maxWidth / 2) - 20,
+                                                height: boxSuperior.maxHeight,
+                                                child: new LayoutBuilder(
+                                                  builder: (BuildContext context, BoxConstraints boxEsquerda) {
+                                                      return Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Padding(
+                                                            padding: EdgeInsets.only(bottom: 20),
+                                                            child: Text(
+                                                                    jogo.descricao, 
+                                                                    textAlign: TextAlign.left,
+                                                                    style: TextStyle(
+                                                                            fontWeight: FontWeight.w800, 
+                                                                            color: Colors.black87,
+                                                                            fontSize: 24,
+                                                                            letterSpacing: 1.5,
+                                                                            shadows: [
+                                                                              Shadow(
+                                                                                  blurRadius: 2.0,
+                                                                                  color: Colors.black54,
+                                                                                  offset: Offset(1.0, 1.0),
+                                                                                  ),
+                                                                            ],
+                                                                          ),
+                                                                  )
+                                                          ),
+                                                          Container(
+                                                              width: boxEsquerda.maxWidth,
+                                                              height: (boxEsquerda.maxHeight - 20) * 0.90,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                  image: DecorationImage(
+                                                                    image: NetworkImage(jogo.avatar),
+                                                                    fit: BoxFit.fill
+                                                                  ),
+                                                              )
+                                                          ),
+                                                        ]
+                                                      );
+                                                  }
+                                                )
+                                              ),
+                                              Container(
+                                                width: (constraints.maxWidth / 2) - 15,
+                                                height: constraints.maxHeight,
+                                                alignment: Alignment.topCenter,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      padding: EdgeInsets.only(top: 100,left: 15),
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Row(
+                                                        children: [
+                                                          Container(
+                                                              width: 125,
+                                                              height: 90,
+                                                              decoration: BoxDecoration(
+                                                                  shape: BoxShape.circle,
+                                                                  image: DecorationImage(
+                                                                    image: NetworkImage(jogo.avatar),
+                                                                    fit: BoxFit.contain
+                                                                  ),
+                                                              )
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsets.only(left: 10),
+                                                            child: Text(
+                                                                    jogoPlat.descricao,
+                                                                    textAlign: TextAlign.left,
+                                                                    style: TextStyle(
+                                                                            fontWeight: FontWeight.w800, 
+                                                                            color: Colors.black87,
+                                                                            fontSize: 16,
+                                                                            letterSpacing: 1.5,
+                                                                            shadows: [
+                                                                              Shadow(
+                                                                                  blurRadius: 2.0,
+                                                                                  color: Colors.black54,
+                                                                                  offset: Offset(1.0, 1.0),
+                                                                                  ),
+                                                                            ],
+                                                                          ),
+                                                                  )
+                                                          )
+                                                        ],
+                                                      )
+                                                    ),
+                                                    Container(
+                                                      padding: EdgeInsets.only(top: 30,left: 15),
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Row(
+                                                        children: [
+                                                          Container(
+                                                              width: 125,
+                                                              height: 90,
+                                                              decoration: BoxDecoration(
+                                                                  shape: BoxShape.circle,
+                                                                  image: DecorationImage(
+                                                                    image: NetworkImage(jogo.avatar),
+                                                                    fit: BoxFit.contain
+                                                                  ),
+                                                              )
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsets.only(left: 10),
+                                                            child: Text(
+                                                                      generosDesc.join(', '),
+                                                                      textAlign: TextAlign.left,
+                                                                      style: TextStyle(
+                                                                              fontWeight: FontWeight.w800, 
+                                                                              color: Colors.black87,
+                                                                              fontSize: 16,
+                                                                              letterSpacing: 1.5,
+                                                                              shadows: [
+                                                                                Shadow(
+                                                                                    blurRadius: 2.0,
+                                                                                    color: Colors.black54,
+                                                                                    offset: Offset(1.0, 1.0),
+                                                                                    ),
+                                                                              ],
+                                                                            ),
+                                                                    )
+                                                          )
+                                                        ],
+                                                      )
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(top: 90),
+                                                      child: Text(
+                                                        "ID ( " +jogo.id.toString() + " )  " + jogo.dataCadastro,
+                                                        textAlign: TextAlign.left,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.w800,
+                                                          color: Colors.black87,
+                                                          fontSize: 14,
+                                                          letterSpacing: 1.0,
+                                                          shadows: [
+                                                            Shadow(
+                                                              blurRadius: 2.0,
+                                                              color: Colors.black54,
+                                                              offset: Offset(1.0,1.0)
+                                                            )
+                                                          ]
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
+                                              )
+                                            ],
+                                          ) 
+                                        )
+                                      ]);
+                                    }
+                                  ),
+                              ),
+                              Container(
+                                height: constraints.maxHeight * 0.15,
+                                width: constraints.maxWidth,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ButtonBar(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 100),
+                                          child: SizedBox.fromSize(
+                                            size: Size(76, 70),
+                                            child: ClipOval(
+                                              child: Material(
+                                                color: Colors.black12,
+                                                child: InkWell(
+                                                  onTap: () {}, 
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: <Widget>[
+                                                      Icon(Icons.edit),
+                                                      Text("Editar"),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ),
+                                        SizedBox.fromSize(
+                                          size: Size(76, 70),
+                                          child: ClipOval(
+                                            child: Material(
+                                              color: Colors.black12,
+                                              child: InkWell(
+                                                onTap: () {},
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Icon(Icons.delete), 
+                                                    Text("Excluir"),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                )
+                              )
+                            ],
+                          )
+                         );
+                }  
+              )
           )
           );
   }
