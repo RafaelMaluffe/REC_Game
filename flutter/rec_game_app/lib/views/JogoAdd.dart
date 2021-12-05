@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:rec_game_app/Service/GeneroService.dart' as gen;
 import 'package:rec_game_app/Service/JogoService.dart';
@@ -9,6 +12,7 @@ import 'package:rec_game_app/models/plataforma.dart';
 
 int? plataforma;
 List<int> genero = [];
+late var img64;
 
 // ignore: camel_case_types
 class JogoAdd extends StatefulWidget {
@@ -60,40 +64,52 @@ class _JogoAddState extends State<JogoAdd> {
               FutureBuilder<List<Plataforma>>(
                   future: plat.listarPlataforma,
                   builder: (context, plataforma) {
-                    return Column(
-                      children: [
-                        DropDownBox(
-                            tipo: 'plataforma',
-                            listaDrop: plataforma.data!,
-                            text: 'Plataforma:'),
-                      ],
-                    );
+                    return plataforma.hasData
+                        ? Column(
+                            children: [
+                              DropDownBox(
+                                  tipo: 'plataforma',
+                                  listaDrop: plataforma.data!,
+                                  text: 'Plataforma:'),
+                            ],
+                          )
+                        : Center(
+                            child: Icon(Icons.access_time),
+                          );
                   }),
               FutureBuilder<List<Genero>>(
                   future: gen.listarGenero,
                   builder: (context, genero) {
-                    return Column(children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(2),
-                            child: DropDownBox(
-                                tipo: 'genero',
-                                listaDrop: genero.data!,
-                                text: 'Gênero: '),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(2),
-                            child: DropDownBox(
-                                tipo: 'genero',
-                                listaDrop: genero.data!,
-                                text: 'Sub-Gênero:'),
-                          ),
-                        ],
-                      ),
-                    ]);
-                  })
+                    return genero.hasData
+                        ? Column(children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(2),
+                                  child: DropDownBox(
+                                      tipo: 'genero',
+                                      listaDrop: genero.data!,
+                                      text: 'Gênero: '),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(2),
+                                  child: DropDownBox(
+                                      tipo: 'genero',
+                                      listaDrop: genero.data!,
+                                      text: 'Sub-Gênero:'),
+                                ),
+                              ],
+                            ),
+                          ])
+                        : Center(
+                            child: Icon(Icons.access_time),
+                          );
+                  }),
+              ElevatedButton.icon(
+                  onPressed: getFromGallery,
+                  icon: Icon(Icons.add_a_photo),
+                  label: Text("")),
             ],
           ),
         ),
@@ -103,7 +119,12 @@ class _JogoAddState extends State<JogoAdd> {
           final validOk = _form.currentState?.validate();
           if (validOk == true) {
             _form.currentState!.save();
-            criarJogo(descricao, dataCadastro, plataforma!, genero);
+            //String base64Encode(List<int> imag64) => base64.encode(imag64);
+            // final bytes = File(img64).readAsBytesSync();
+            String imgfinal = base64Encode(img64);
+            print(imgfinal);
+            criarJogo(
+                descricao, dataCadastro, plataforma!, genero); //+ imgfinal
           }
           Navigator.pop(context);
         },
@@ -111,6 +132,20 @@ class _JogoAddState extends State<JogoAdd> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  getFromGallery() async {
+    XFile? PickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 1000,
+      maxWidth: 1000,
+    );
+    setState(() {
+      // ImageFile = File(PickedFile!.path);
+      Future.delayed(Duration.zero, () async {
+        img64 = await PickedFile!.readAsBytes();
+      });
+    });
   }
 }
 
