@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -119,10 +118,13 @@ class _JogoAddState extends State<JogoAdd> {
           final validOk = _form.currentState?.validate();
           if (validOk == true) {
             _form.currentState!.save();
-            //String base64Encode(List<int> imag64) => base64.encode(imag64);
-            // final bytes = File(img64).readAsBytesSync();
             String imgfinal = base64Encode(img64);
-            print(imgfinal);
+            imgfinal = "data:image/jpeg;base64," + imgfinal;
+            plataforma =
+                plataforma == null ? plataforma = 0 : plataforma = plataforma;
+            genero = genero.length > 2
+                ? genero = genero.sublist(genero.length - 2, genero.length)
+                : genero = genero;
             criarJogo(descricao, dataCadastro, plataforma!, genero, imgfinal);
           }
           Navigator.pop(context);
@@ -140,7 +142,6 @@ class _JogoAddState extends State<JogoAdd> {
       maxWidth: 1000,
     );
     setState(() {
-      // ImageFile = File(PickedFile!.path);
       Future.delayed(Duration.zero, () async {
         img64 = await PickedFile!.readAsBytes();
       });
